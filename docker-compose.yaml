@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  php:
+    image: dokuwiki-php
+    build:
+      context: ./php
+    volumes:
+      - ./dokuwiki:/var/www
+    restart: on-failure
+    networks:
+      - dokuwiki
+  nginx:
+    image: dokuwiki-http
+    build: ./http
+    ports:
+      - "5000:80"
+    volumes:
+      - ./dokuwiki:/var/www
+    restart: on-failure
+    networks:
+      - dokuwiki
+
+
+networks:
+  dokuwiki:
+    driver: bridge
+
